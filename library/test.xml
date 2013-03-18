@@ -1,0 +1,56 @@
+<CallFlow Name="UserCantLogIntoWebsite">
+	<Objectives>
+		<Objective name="VisitWebsite">
+			<flag value="WebsiteURL"/>
+		</Objective>
+		<Objective name="LoginWebsite">
+			<flag value="Username" />
+			<flag value="password" />
+		</Objective>
+	</Objectives>
+
+	<!-- This is just a stub call. We'd need this if the caller doesnt pick up and we want to log -->
+	<CallBlock name="Caller Pickup"/>
+	
+	
+	<!-- All of the callblocks are defined individually here, then linked in the FlowBlock -->
+	<CallBlock name="Introduction">
+		<statement value="Hello [TARGETNAME], [PAUSE] My name is [CNAME] from [CROLE]"/>
+	</CallBlock>
+	<CallBlock name="Website Problems">
+		<statement value="I'm having trouble logging into the [WEBSITE] application.  Can you help me?  [PAUSE] [POC] told me to go to [URL] and login, but I get a strange error. [PAUSE] Can you login?"/>
+	</CallBlock>
+	<CallBlock name="Busted">
+		<statement value="I'm sorry to bother you. Actually I work for Foundstone, a Division of Mcafee. We were hired by your company to perform 'Social Engineering' testing. You can contact [POC] if you need to confirm this. Since I\'m conducting this testing, I'd ask that you don't tell your coworkers"/>
+	</CallBlock> 	
+	<CallBlock name="Recovery Response">
+		<statement value="Well, thanks anyway.  I'll try to get in touch with [POC]."/>
+	</CallBlock>
+	<CallBlock name="Successful Login">
+		<statement value="[WAIT UNTIL TARGET LOGS IN]  Let me try that one more time. [TYPE]  Wow! It works!  Thank you for your help."/>
+	</CallBlock>
+	
+	<!-- This is where we link callblocks together, the idea is we always know where to go and can go to any block we'd like. Makes it easier for people to rearrange flows -->
+	<FlowBlock name="FlowBlock1">
+		<CallBlockFlow value="Caller Pickup">
+			<PositiveResponse value="Introduction"/>
+			<NegativeResponse value="Recovery Response"/>
+			<RecoveryResponse value="Recovery Response"/>
+		</CallBlockFlow>
+		<CallBlockFlow value="Introduction">
+			<PositiveResponse value="Website Problems"/>
+			<NegativeResponse value="Recovery Response"/>
+			<RecoveryResponse value="Recovery Response"/>
+		</CallBlockFlow>
+		<CallBlockFlow value="Website Problems">
+			<PositiveResponse value="Successful Login"/>
+			<NegativeResponse value="Recovery Response"/>
+			<RecoveryResponse value="Recovery Response"/>
+		</CallBlockFlow>
+
+
+		<!-- Busted response should always be the same no matter where in the call you are -->
+		<BustedResponse value="Busted"/>
+	</FlowBlock>
+
+</CallFlow>

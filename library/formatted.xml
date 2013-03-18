@@ -1,0 +1,34 @@
+"<?xml version="1.0" ?>
+<CallFlow Name="UserCantLogIntoWebsite">
+  <Objectives>
+    <Objective name="VisitWebsite">
+      <flag value="Password"></flag>
+      <flag value="Username"></flag>
+      <flag value="WebsiteURL"></flag>
+    </Objective>
+  </Objectives>
+  <CallBlock name="My Callblock">
+    <statement value="My Callblock statement"></statement>
+  </CallBlock>
+  <CallBlock name="My Callblock2">
+    <statement value="My Callblock statement2"></statement>
+  </CallBlock>
+  <flowBlock name="FlowBlock1">
+    <CallBlockFlow value="Caller Pickup">
+      <PostiveResponse value="Introduction"></PostiveResponse>
+      <NegativeResponse value="RecoveryResponse"></NegativeResponse>
+      <RecoveryResponse value="RecoveryResponse"></RecoveryResponse>
+    </CallBlockFlow>
+    <CallBlockFlow value="Introduction">
+      <PostiveResponse value="Website Problems"></PostiveResponse>
+      <NegativeResponse value="RecoveryResponse"></NegativeResponse>
+      <RecoveryResponse value="RecoveryResponse"></RecoveryResponse>
+    </CallBlockFlow>
+    <CallBlockFlow value="Website Problems">
+      <PostiveResponse value="Successful Login"></PostiveResponse>
+      <NegativeResponse value="RecoveryResponse"></NegativeResponse>
+      <RecoveryResponse value="RecoveryResponse"></RecoveryResponse>
+    </CallBlockFlow>
+    <BustedResponse value="Busted"></BustedResponse>
+  </flowBlock>
+</CallFlow>"
