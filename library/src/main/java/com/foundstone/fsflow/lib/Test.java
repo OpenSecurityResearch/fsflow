@@ -3,7 +3,6 @@ package com.foundstone.fsflow.lib;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +37,7 @@ public class Test {
 //        
 //    String xml = x.toXML(flow);
     CallFlow flow = CallFlow.class.cast(x.fromXML(new File("test.xml")));
+    CallMachine machine = new CallMachine(flow);
     System.out.println("Break");
     
   }

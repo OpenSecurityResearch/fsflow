@@ -47,7 +47,7 @@
 			<NegativeResponse value="Recovery Response"/>
 			<RecoveryResponse value="Recovery Response"/>
 		</CallBlockFlow>
-
+		<CallBlockFlow value="Recovery Response" />
 
 		<!-- Busted response should always be the same no matter where in the call you are -->
 		<BustedResponse value="Busted"/>

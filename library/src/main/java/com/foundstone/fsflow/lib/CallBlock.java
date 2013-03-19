@@ -38,4 +38,12 @@ public final class CallBlock {
   //---------------------------- Utility Methods ------------------------------
   
   //---------------------------- Property Methods -----------------------------     
+
+  public String getName() {
+    return name;
+  }
+
+  public Statement getStatement() {
+    return statement;
+  }
 }
