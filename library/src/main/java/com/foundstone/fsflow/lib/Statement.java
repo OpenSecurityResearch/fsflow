@@ -35,4 +35,8 @@ public final class Statement {
   //---------------------------- Utility Methods ------------------------------
   
   //---------------------------- Property Methods -----------------------------     
+  
+  public String getValue() {
+    return value;
+  }
 }

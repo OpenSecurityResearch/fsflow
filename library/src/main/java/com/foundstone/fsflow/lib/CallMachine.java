@@ -18,7 +18,7 @@ public class CallMachine {
   
   private CallBlockFlow currentCallBlockFlow;
   
-  private boolean busted = false;
+  private volatile boolean busted = false;
   
   /////////////////////////////// Constructors \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
   
@@ -127,7 +127,12 @@ public class CallMachine {
   
   public synchronized Response busted() {
     busted = true;
+    currentCallBlockFlow = findFlowFromResponse(callFlow.getFlowBlock().getBustedResponse());
     return callFlow.getFlowBlock().getBustedResponse();
+  }
+  
+  public synchronized CallBlock getCurrentCallBlock() {
+    return findCallBlockFromFlow(currentCallBlockFlow);
   }
   
   //------------------------ Implements:
@@ -137,6 +142,19 @@ public class CallMachine {
   //---------------------------- Abstract Methods -----------------------------
   
   //---------------------------- Utility Methods ------------------------------
+    
+  private CallBlock findCallBlockFromFlow(CallBlockFlow flow) {
+    CallBlock block = null;
+    
+    for (CallBlock b : callFlow.getCallBlocks()) {
+      if (flow.getValue().equalsIgnoreCase(b.getName())) {
+        block = b;
+        break;
+      }
+    }
+    
+    return block;
+  }
   
   private CallBlockFlow findFlowFromResponse(Response response) {
     
@@ -160,4 +178,22 @@ public class CallMachine {
   public CallFlow getCallFlow() {
     return callFlow;
   }
+  
+  public boolean isBusted() {
+    return busted;
+  }
+  
+  public CallBlock getBustedCallBlock() {
+    CallBlock block = null;
+    
+    for(CallBlock b : callFlow.getCallBlocks()) {
+      if (b.getName().equalsIgnoreCase("busted")) {
+        block = b;
+        break;
+      }
+    }
+    
+    return block;
+  }
+  
 }
