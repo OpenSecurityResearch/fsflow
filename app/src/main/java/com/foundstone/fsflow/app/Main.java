@@ -4,8 +4,11 @@ import com.foundstone.fsflow.lib.CallFlow;
 import com.foundstone.fsflow.lib.CallMachine;
 import com.foundstone.fsflow.lib.CallSerializer;
 import com.thoughtworks.xstream.XStream;
+import java.io.File;
 import java.io.IOException;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.text.html.HTMLDocument;
 
 /**
@@ -31,6 +34,12 @@ public class Main extends javax.swing.JFrame {
     callBlockTitle = new javax.swing.JLabel();
     jScrollPane2 = new javax.swing.JScrollPane();
     textPane = new javax.swing.JEditorPane();
+    jToolBar1 = new javax.swing.JToolBar();
+    openButton = new javax.swing.JButton();
+    reloadButton = new javax.swing.JButton();
+    logButton = new javax.swing.JButton();
+    jPanel2 = new javax.swing.JPanel();
+    flowNameLabel = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,10 +102,69 @@ public class Main extends javax.swing.JFrame {
       }
     });
 
+    callBlockTitle.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
     callBlockTitle.setText("jLabel2");
 
     textPane.setMargin(new java.awt.Insets(20, 20, 20, 20));
     jScrollPane2.setViewportView(textPane);
+
+    jToolBar1.setRollover(true);
+
+    openButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/open.png"))); // NOI18N
+    openButton.setText("Open");
+    openButton.setFocusable(false);
+    openButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    openButton.setMargin(new java.awt.Insets(5, 5, 5, 5));
+    openButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    openButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        openButtonActionPerformed(evt);
+      }
+    });
+    jToolBar1.add(openButton);
+
+    reloadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/reload.png"))); // NOI18N
+    reloadButton.setText("Reload");
+    reloadButton.setFocusable(false);
+    reloadButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    reloadButton.setMargin(new java.awt.Insets(5, 5, 5, 5));
+    reloadButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    reloadButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        reloadButtonActionPerformed(evt);
+      }
+    });
+    jToolBar1.add(reloadButton);
+
+    logButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/log.png"))); // NOI18N
+    logButton.setText("Call Log");
+    logButton.setFocusable(false);
+    logButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    logButton.setMargin(new java.awt.Insets(5, 5, 5, 5));
+    logButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jToolBar1.add(logButton);
+
+    jPanel2.setBackground(new java.awt.Color(60, 60, 60));
+
+    flowNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+    flowNameLabel.setText("jLabel2");
+
+    org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
+    jPanel2.setLayout(jPanel2Layout);
+    jPanel2Layout.setHorizontalGroup(
+      jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+      .add(jPanel2Layout.createSequentialGroup()
+        .addContainerGap()
+        .add(flowNameLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+    jPanel2Layout.setVerticalGroup(
+      jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+      .add(jPanel2Layout.createSequentialGroup()
+        .addContainerGap()
+        .add(flowNameLabel)
+        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
 
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -106,19 +174,19 @@ public class Main extends javax.swing.JFrame {
       .add(layout.createSequentialGroup()
         .addContainerGap()
         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+          .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .add(recoveryModeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .add(layout.createSequentialGroup()
             .add(negativeResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 384, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(positiveResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 373, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-          .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .add(jScrollPane2))
+          .add(jScrollPane2)
+          .add(bustedButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .add(layout.createSequentialGroup()
+            .add(6, 6, 6)
+            .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         .addContainerGap())
-      .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-        .add(layout.createSequentialGroup()
-          .addContainerGap()
-          .add(bustedButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
-          .addContainerGap()))
+      .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     layout.linkSize(new java.awt.Component[] {negativeResponseButton, positiveResponseButton}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
@@ -127,22 +195,22 @@ public class Main extends javax.swing.JFrame {
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(layout.createSequentialGroup()
         .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-        .add(18, 18, 18)
-        .add(callBlockTitle)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+        .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+        .add(callBlockTitle, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 37, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 164, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
           .add(positiveResponseButton)
           .add(negativeResponseButton))
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 73, Short.MAX_VALUE)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+        .add(bustedButton)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(recoveryModeButton)
-        .add(44, 44, 44))
-      .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-        .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-          .addContainerGap(344, Short.MAX_VALUE)
-          .add(bustedButton)
-          .add(95, 95, 95)))
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
     );
 
     pack();
@@ -168,12 +236,39 @@ public class Main extends javax.swing.JFrame {
     setCurrentState(machine);
   }//GEN-LAST:event_bustedButtonActionPerformed
 
+  private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
+    final JFileChooser fc = new JFileChooser();
+    fc.setFileFilter(new FileFilter(){
+
+      @Override
+      public boolean accept(File f) {
+        return f.getName().toUpperCase().endsWith(".XML") || f.isDirectory();
+      }
+
+      @Override
+      public String getDescription() {
+        return "XML Files";
+      }
+    });
+    if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+      File f  = fc.getSelectedFile();
+      try {
+        CallFlow flow = CallFlow.class.cast(X.fromXML(f));
+        initCall(flow);
+      } catch (Throwable t) {
+        flowNameLabel.setText("Couldn't open " + f.getName() + " : " + t.getMessage());
+      }
+    }
+  }//GEN-LAST:event_openButtonActionPerformed
+
+  private void reloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadButtonActionPerformed
+    initCall(machine.getCallFlow());    
+  }//GEN-LAST:event_reloadButtonActionPerformed
+
   ///////////////////////////// Class Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
  
-  private final HTMLDocument textDoc = new HTMLDocument();
-  
-  private CallMachine machine = null;
-  
+  private static final XStream X = CallSerializer.createStream();
+ 
   ////////////////////////////// Class Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
   public static void main(String args[]) throws IOException {
@@ -203,11 +298,9 @@ public class Main extends javax.swing.JFrame {
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
       public void run() {
-        Main main = new Main();        
-        XStream x = CallSerializer.createStream();
-        CallFlow flow = CallFlow.class.cast(x.fromXML(Main.class.getResourceAsStream("/testFlow.xml")));
-        CallMachine m = new CallMachine(flow);
-        main.setCurrentState(m);
+        Main main = new Main();                
+        CallFlow flow = CallFlow.class.cast(X.fromXML(Main.class.getResourceAsStream("/testFlow.xml")));
+        main.initCall(flow);
         main.setVisible(true);
       }
     });
@@ -215,15 +308,26 @@ public class Main extends javax.swing.JFrame {
   
   //////////////////////////////// Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
 
+  private final HTMLDocument textDoc = new HTMLDocument();
+  
+  private CallMachine machine = null;
+  
+  
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bustedButton;
   private javax.swing.JLabel callBlockTitle;
+  private javax.swing.JLabel flowNameLabel;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
+  private javax.swing.JPanel jPanel2;
   private javax.swing.JScrollPane jScrollPane2;
+  private javax.swing.JToolBar jToolBar1;
+  private javax.swing.JButton logButton;
   private javax.swing.JButton negativeResponseButton;
+  private javax.swing.JButton openButton;
   private javax.swing.JButton positiveResponseButton;
   private javax.swing.JButton recoveryModeButton;
+  private javax.swing.JButton reloadButton;
   private javax.swing.JEditorPane textPane;
   // End of variables declaration//GEN-END:variables
      
@@ -233,6 +337,7 @@ public class Main extends javax.swing.JFrame {
     initComponents();    
     textPane.setDocument(textDoc);
     textPane.setContentType("text/html");
+    setTitle("FSFlow");
   }
   
   ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -242,9 +347,15 @@ public class Main extends javax.swing.JFrame {
    * @param machine The state machine to set the UI to.
    */
   public void setCurrentState(CallMachine machine) {    
-    this.machine = machine;   
-    updateState();
-    
+    updateState();    
+  }
+  
+  public void initCall(CallFlow callFlow) {
+    machine = new CallMachine(callFlow);
+    // TODO: Clear call log
+    setCurrentState(machine);
+    flowNameLabel.setText("Using flow named: " + callFlow.getName());
+    setTitle("FSFlow - " + callFlow.getName());
   }
   
   //------------------------ Implements:
