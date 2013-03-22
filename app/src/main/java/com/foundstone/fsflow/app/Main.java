@@ -105,6 +105,7 @@ public class Main extends javax.swing.JFrame {
     callBlockTitle.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
     callBlockTitle.setText("jLabel2");
 
+    textPane.setEditable(false);
     textPane.setMargin(new java.awt.Insets(20, 20, 20, 20));
     jScrollPane2.setViewportView(textPane);
 
@@ -142,6 +143,11 @@ public class Main extends javax.swing.JFrame {
     logButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     logButton.setMargin(new java.awt.Insets(5, 5, 5, 5));
     logButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    logButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        logButtonActionPerformed(evt);
+      }
+    });
     jToolBar1.add(logButton);
 
     jPanel2.setBackground(new java.awt.Color(60, 60, 60));
@@ -265,6 +271,10 @@ public class Main extends javax.swing.JFrame {
     initCall(machine.getCallFlow());    
   }//GEN-LAST:event_reloadButtonActionPerformed
 
+  private void logButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logButtonActionPerformed
+    logDialog.setVisible(!logDialog.isVisible());
+  }//GEN-LAST:event_logButtonActionPerformed
+
   ///////////////////////////// Class Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
  
   private static final XStream X = CallSerializer.createStream();
@@ -312,6 +322,7 @@ public class Main extends javax.swing.JFrame {
   
   private CallMachine machine = null;
   
+  private final CallLogDialog logDialog = new CallLogDialog(this, false);
   
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bustedButton;
@@ -348,11 +359,13 @@ public class Main extends javax.swing.JFrame {
    */
   public void setCurrentState(CallMachine machine) {    
     updateState();    
+    logDialog.log("Moved to state " + machine.getCurrentCallBlock().getName());
   }
   
   public void initCall(CallFlow callFlow) {
     machine = new CallMachine(callFlow);
-    // TODO: Clear call log
+    logDialog.clearLog();
+    logDialog.log("Loading new flow: " + callFlow.getName());
     setCurrentState(machine);
     flowNameLabel.setText("Using flow named: " + callFlow.getName());
     setTitle("FSFlow - " + callFlow.getName());

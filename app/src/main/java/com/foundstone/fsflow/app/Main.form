@@ -185,6 +185,7 @@
       <SubComponents>
         <Component class="javax.swing.JEditorPane" name="textPane">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[20, 20, 20, 20]"/>
             </Property>
@@ -246,6 +247,9 @@
             </Property>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

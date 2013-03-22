@@ -15,11 +15,10 @@ public class FlowBlock {
   
   ////////////////////////////// Class Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
-  public static FlowBlock from(String name, List<CallBlockFlow> flows, Response bustedResponse) {
+  public static FlowBlock from(String name, List<CallBlockFlow> flows) {
     FlowBlock flow = new FlowBlock();
     flow.name = name;
     flow.flows = Lists.newArrayList(flows);
-    flow.bustedResponse = bustedResponse;
     return flow;
   }
   
@@ -27,9 +26,7 @@ public class FlowBlock {
     
   private volatile String name;
   
-  private volatile List<CallBlockFlow> flows = Lists.newArrayList();
-  
-  private volatile Response bustedResponse;
+  private volatile List<CallBlockFlow> flows = Lists.newArrayList(); 
   
   /////////////////////////////// Constructors \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
   
@@ -51,9 +48,5 @@ public class FlowBlock {
 
   public List<CallBlockFlow> getFlows() {
     return ImmutableList.copyOf(flows);
-  }
-
-  public Response getBustedResponse() {
-    return bustedResponse;
   }
 }

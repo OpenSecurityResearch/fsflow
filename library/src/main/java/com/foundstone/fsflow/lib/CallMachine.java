@@ -125,10 +125,9 @@ public class CallMachine {
     return currentCallBlockFlow;
   }  
   
-  public synchronized Response busted() {
+  public synchronized void busted() {
     busted = true;
-    currentCallBlockFlow = findFlowFromResponse(callFlow.getFlowBlock().getBustedResponse());
-    return callFlow.getFlowBlock().getBustedResponse();
+    currentCallBlockFlow = findFlowFromName("Busted");
   }
   
   public synchronized CallBlock getCurrentCallBlock() {
@@ -143,6 +142,20 @@ public class CallMachine {
   
   //---------------------------- Utility Methods ------------------------------
     
+  private CallBlockFlow findFlowFromName(String name) {
+    CallBlockFlow flow = null;
+    
+    for (CallBlockFlow f : callFlow.getFlowBlock().getFlows()) {
+      if (f.getValue().equalsIgnoreCase("Busted")) {
+        flow = f;
+        break;
+      }
+    }    
+    
+    return flow;
+    
+  }
+  
   private CallBlock findCallBlockFromFlow(CallBlockFlow flow) {
     CallBlock block = null;
     
