@@ -1,5 +1,6 @@
 package com.foundstone.fsflow.lib;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import java.util.List;
 import javax.annotation.concurrent.Immutable;
@@ -37,7 +38,19 @@ public final class CallFlow {
   /////////////////////////////// Constructors \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
   
   ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-  
+ 
+  public ImmutableSet<String> getVariables() {
+    ImmutableSet.Builder<String> builder = new ImmutableSet.Builder<String>();
+    
+    for (CallBlock block : callBlocks) {
+      Statement s = block.getStatement();
+      if (s != null) {
+        builder.addAll(s.getVariables());
+      }
+    }
+    
+    return builder.build();
+  }
   //------------------------ Implements:
   
   //------------------------ Overrides:

@@ -15,19 +15,19 @@
 	
 	<!-- All of the callblocks are defined individually here, then linked in the FlowBlock -->
 	<CallBlock name="Introduction">
-		<statement value="Hello [TARGETNAME], [PAUSE] My name is [CNAME] from [CROLE]"/>
+		<statement value="Hello [TARGETNAME], *PAUSE* My name is [CNAME] from [CROLE]"/>
 	</CallBlock>
 	<CallBlock name="Website Problems">
-		<statement value="I'm having trouble logging into the [WEBSITE] application.  Can you help me?  [PAUSE] [POC] told me to go to [URL] and login, but I get a strange error. [PAUSE] Can you login?"/>
+		<statement value="I'm having trouble logging into the [WEBSITE] application.  Can you help me?  *PAUSE* [POC] told me to go to [URL] and login, but I get a strange error. *PAUSE* Can you login?"/>
 	</CallBlock>
 	<CallBlock name="Busted">
-		<statement value="I'm sorry to bother you. Actually I work for Foundstone, a Division of Mcafee. We were hired by your company to perform 'Social Engineering' testing. You can contact [POC] if you need to confirm this. Since I\'m conducting this testing, I'd ask that you don't tell your coworkers"/>
+		<statement value="I'm sorry to bother you. Actually I work for Foundstone, a Division of McAfee. We were hired by your company to perform 'Social Engineering' testing. You can contact [POC] if you need to confirm this. Since I'm conducting this testing, I'd ask that you don't tell your coworkers"/>
 	</CallBlock> 	
 	<CallBlock name="Recovery Response">
 		<statement value="Well, thanks anyway.  I'll try to get in touch with [POC]."/>
 	</CallBlock>
 	<CallBlock name="Successful Login">
-		<statement value="[WAIT UNTIL TARGET LOGS IN]  Let me try that one more time. [TYPE]  Wow! It works!  Thank you for your help."/>
+		<statement value="*WAIT UNTIL TARGET LOGS IN*  Let me try that one more time. *TYPE*  Wow! It works!  Thank you for your help."/>
 	</CallBlock>
 	<CallBlock name="No Answer" />
 	

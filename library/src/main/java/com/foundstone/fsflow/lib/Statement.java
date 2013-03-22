@@ -1,5 +1,8 @@
 package com.foundstone.fsflow.lib;
 
+import com.google.common.collect.ImmutableSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -10,6 +13,9 @@ public final class Statement {
   
   ///////////////////////////// Class Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
+  private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\[(.+?)\\]");
+  
+
   ////////////////////////////// Class Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
   public static Statement from(String value) {
@@ -25,6 +31,18 @@ public final class Statement {
   /////////////////////////////// Constructors \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
   
   ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  
+  public ImmutableSet<String> getVariables() {
+    
+    ImmutableSet.Builder<String> builder = new ImmutableSet.Builder<String>();
+    
+    Matcher m = VARIABLE_PATTERN.matcher(value);
+    while (m.find()) {
+      String g = m.group(1);
+      builder.add(g);
+    }
+    return builder.build();
+  }
   
   //------------------------ Implements:
   

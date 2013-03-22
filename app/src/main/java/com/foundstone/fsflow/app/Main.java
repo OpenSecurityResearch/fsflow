@@ -6,8 +6,11 @@ import com.foundstone.fsflow.lib.CallSerializer;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map.Entry;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JFileChooser;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.text.html.HTMLDocument;
 
@@ -40,8 +43,13 @@ public class Main extends javax.swing.JFrame {
     logButton = new javax.swing.JButton();
     jPanel2 = new javax.swing.JPanel();
     flowNameLabel = new javax.swing.JLabel();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    variablesTable = new javax.swing.JTable();
+    jLabel2 = new javax.swing.JLabel();
+    clearButton = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
 
     jPanel1.setBackground(new java.awt.Color(60, 60, 60));
 
@@ -172,27 +180,61 @@ public class Main extends javax.swing.JFrame {
         .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
+    variablesTable.setModel(new javax.swing.table.DefaultTableModel(
+      new Object [][] {
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null}
+      },
+      new String [] {
+        "Title 1", "Title 2", "Title 3", "Title 4"
+      }
+    ));
+    variablesTable.setRowHeight(24);
+    jScrollPane1.setViewportView(variablesTable);
+
+    jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+    jLabel2.setText("Call Variables");
+
+    clearButton.setText("Clear");
+    clearButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        clearButtonActionPerformed(evt);
+      }
+    });
+
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
       .add(layout.createSequentialGroup()
         .addContainerGap()
-        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
           .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .add(recoveryModeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .add(layout.createSequentialGroup()
-            .add(negativeResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 384, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .add(positiveResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 373, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-          .add(jScrollPane2)
-          .add(bustedButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(0, 0, Short.MAX_VALUE)
+            .add(clearButton))
           .add(layout.createSequentialGroup()
-            .add(6, 6, 6)
-            .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+              .add(layout.createSequentialGroup()
+                .add(6, 6, 6)
+                .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+              .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                .add(org.jdesktop.layout.GroupLayout.LEADING, recoveryModeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(org.jdesktop.layout.GroupLayout.LEADING, bustedButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                  .add(negativeResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 348, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                  .add(positiveResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 332, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+              .add(jLabel2)
+              .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 324, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
         .addContainerGap())
-      .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     layout.linkSize(new java.awt.Component[] {negativeResponseButton, positiveResponseButton}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
@@ -204,18 +246,25 @@ public class Main extends javax.swing.JFrame {
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(callBlockTitle, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 37, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+          .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+          .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 164, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+          .add(layout.createSequentialGroup()
+            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 164, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+              .add(negativeResponseButton)
+              .add(positiveResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 38, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(bustedButton)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(recoveryModeButton))
+          .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-          .add(positiveResponseButton)
-          .add(negativeResponseButton))
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(bustedButton)
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(recoveryModeButton)
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .add(clearButton)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 12, Short.MAX_VALUE)
         .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
     );
 
@@ -253,7 +302,7 @@ public class Main extends javax.swing.JFrame {
 
       @Override
       public String getDescription() {
-        return "XML Files";
+        return "FSFLow XML Configurations";
       }
     });
     if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -274,6 +323,10 @@ public class Main extends javax.swing.JFrame {
   private void logButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logButtonActionPerformed
     logDialog.setVisible(!logDialog.isVisible());
   }//GEN-LAST:event_logButtonActionPerformed
+
+  private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+    tableModel.clearVariables();
+  }//GEN-LAST:event_clearButtonActionPerformed
 
   ///////////////////////////// Class Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
  
@@ -324,13 +377,18 @@ public class Main extends javax.swing.JFrame {
   
   private final CallLogDialog logDialog = new CallLogDialog(this, false);
   
+  private final VariableTableModel tableModel = new VariableTableModel();
+  
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bustedButton;
   private javax.swing.JLabel callBlockTitle;
+  private javax.swing.JButton clearButton;
   private javax.swing.JLabel flowNameLabel;
   private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JPanel jPanel2;
+  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JToolBar jToolBar1;
   private javax.swing.JButton logButton;
@@ -340,6 +398,7 @@ public class Main extends javax.swing.JFrame {
   private javax.swing.JButton recoveryModeButton;
   private javax.swing.JButton reloadButton;
   private javax.swing.JEditorPane textPane;
+  private javax.swing.JTable variablesTable;
   // End of variables declaration//GEN-END:variables
      
   /////////////////////////////// Constructors \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
@@ -349,6 +408,14 @@ public class Main extends javax.swing.JFrame {
     textPane.setDocument(textDoc);
     textPane.setContentType("text/html");
     setTitle("FSFlow");
+    variablesTable.setModel(tableModel);
+    tableModel.addTableModelListener(new TableModelListener(){
+
+      public void tableChanged(TableModelEvent e) {
+        setCurrentState(machine);
+      }
+    });
+    
   }
   
   ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -369,6 +436,7 @@ public class Main extends javax.swing.JFrame {
     setCurrentState(machine);
     flowNameLabel.setText("Using flow named: " + callFlow.getName());
     setTitle("FSFlow - " + callFlow.getName());
+    tableModel.addVariables(callFlow.getVariables());
   }
   
   //------------------------ Implements:
@@ -413,6 +481,12 @@ public class Main extends javax.swing.JFrame {
   }
   
   private void setText(String text) {
+    
+    // Replace varialbes in text with their substituted value
+    for (Entry<String,String> entry : tableModel.getVariableMap().entrySet()) {
+      text = text.replaceAll("\\[" + entry.getKey() + "\\]", entry.getValue());
+    }
+    
     textPane.setText("<html><center>" + text + "</center></html>");
   }
   
