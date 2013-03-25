@@ -317,7 +317,9 @@ public class Main extends javax.swing.JFrame {
   }//GEN-LAST:event_openButtonActionPerformed
 
   private void reloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadButtonActionPerformed
-    initCall(machine.getCallFlow());    
+    if (machine != null) {
+      initCall(machine.getCallFlow());    
+    }
   }//GEN-LAST:event_reloadButtonActionPerformed
 
   private void logButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logButtonActionPerformed
@@ -362,8 +364,8 @@ public class Main extends javax.swing.JFrame {
     java.awt.EventQueue.invokeLater(new Runnable() {
       public void run() {
         Main main = new Main();                
-        CallFlow flow = CallFlow.class.cast(X.fromXML(Main.class.getResourceAsStream("/testFlow.xml")));
-        main.initCall(flow);
+        //CallFlow flow = CallFlow.class.cast(X.fromXML(Main.class.getResourceAsStream("/testFlow.xml")));
+        main.initCall(null);
         main.setVisible(true);
       }
     });
@@ -426,17 +428,27 @@ public class Main extends javax.swing.JFrame {
    */
   public void setCurrentState(CallMachine machine) {    
     updateState();    
-    logDialog.log("Moved to state " + machine.getCurrentCallBlock().getName());
+    if (machine != null) {
+      logDialog.log("Moved to state " + machine.getCurrentCallBlock().getName());
+    }
   }
   
   public void initCall(CallFlow callFlow) {
-    machine = new CallMachine(callFlow);
-    logDialog.clearLog();
-    logDialog.log("Loading new flow: " + callFlow.getName());
-    setCurrentState(machine);
-    flowNameLabel.setText("Using flow named: " + callFlow.getName());
-    setTitle("FSFlow - " + callFlow.getName());
-    tableModel.addVariables(callFlow.getVariables());
+    if (callFlow == null) {
+      machine = null;
+      logDialog.clearLog();
+      logDialog.log("No flow specified");
+      setCurrentState(null);
+      setTitle("FSFlow");
+    } else {
+      machine = new CallMachine(callFlow);
+      logDialog.clearLog();
+      logDialog.log("Loading new flow: " + callFlow.getName());
+      setCurrentState(machine);
+      flowNameLabel.setText("Using flow named: " + callFlow.getName());
+      setTitle("FSFlow - " + callFlow.getName());
+      tableModel.addVariables(callFlow.getVariables());
+    }
   }
   
   //------------------------ Implements:
@@ -451,18 +463,27 @@ public class Main extends javax.swing.JFrame {
 
     updateText();
     
-    boolean busted = machine.isBusted();
+    if (machine == null) {
+      negativeResponseButton.setEnabled(false);  
+      positiveResponseButton.setEnabled(false);
+      recoveryModeButton.setEnabled(false);
+      bustedButton.setEnabled(false);
+    } else {
     
-    negativeResponseButton.setEnabled(!busted && machine.getNegativeResponse() != null);
-    positiveResponseButton.setEnabled(!busted && machine.getPositiveResponse() != null);
-    recoveryModeButton.setEnabled(!busted && machine.getRecoveryResponse() != null);
-    bustedButton.setEnabled(!busted);    
+      boolean busted = machine.isBusted();
+      negativeResponseButton.setEnabled(!busted && machine.getNegativeResponse() != null);
+      positiveResponseButton.setEnabled(!busted && machine.getPositiveResponse() != null);
+      recoveryModeButton.setEnabled(!busted && machine.getRecoveryResponse() != null);
+      bustedButton.setEnabled(!busted);    
+    }
   }
   
   private void updateText() {
     
-    // Title
-    if(machine.isBusted()) {
+    if (machine == null) {
+      callBlockTitle.setText("");
+      return;
+    } else if(machine.isBusted()) {
       callBlockTitle.setText("Busted!");            
     } else {
       callBlockTitle.setText(machine.getCurrentCallBlock().getName());

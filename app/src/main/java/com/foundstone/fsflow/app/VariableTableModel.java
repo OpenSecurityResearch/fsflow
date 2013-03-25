@@ -34,6 +34,7 @@ public class VariableTableModel extends AbstractTableModel {
         data.put(var, "[" + var + "]");
       }
     }
+    fireTableDataChanged();
   }
   
   public void clearVariables() {

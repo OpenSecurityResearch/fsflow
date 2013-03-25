@@ -1,4 +1,4 @@
-<CallFlow Name="UserCantLogIntoWebsite Again">
+<CallFlow Name="UserCantLogIntoWebsite">
 	<Objectives>
 		<Objective name="VisitWebsite">
 			<flag value="WebsiteURL"/>

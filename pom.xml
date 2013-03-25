@@ -7,6 +7,21 @@
   <packaging>pom</packaging>
   <name>FSFlow - Parent</name>
   
+  <scm>
+    <connection>scm:ssh:git@github.com:Foundstone/fsflow.git</connection>
+    <developerConnection>scm:ssh:git@github.com:Foundstone/fsflow.git</developerConnection>
+    <url>https://github.com/Foundstone/fsflow</url>
+  </scm>
+    
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+    </plugins>
+  </build>    
   <modules>
     <module>library</module>
     <module>app</module>
