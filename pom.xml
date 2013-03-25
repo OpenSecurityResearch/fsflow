@@ -8,8 +8,8 @@
   <name>FSFlow - Parent</name>
   
   <scm>
-    <connection>scm:ssh:git@github.com:Foundstone/fsflow.git</connection>
-    <developerConnection>scm:ssh:git@github.com:Foundstone/fsflow.git</developerConnection>
+    <connection>scm:git:git@github.com:Foundstone/fsflow.git</connection>
+    <developerConnection>scm:git:git@github.com:Foundstone/fsflow.git</developerConnection>
     <url>https://github.com/Foundstone/fsflow</url>
   </scm>
     
