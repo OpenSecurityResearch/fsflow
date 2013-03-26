@@ -119,6 +119,7 @@ public class Main extends javax.swing.JFrame {
     textPane.setMargin(new java.awt.Insets(20, 20, 20, 20));
     jScrollPane2.setViewportView(textPane);
 
+    jToolBar1.setFloatable(false);
     jToolBar1.setRollover(true);
 
     openButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/open.png"))); // NOI18N
@@ -275,21 +276,25 @@ public class Main extends javax.swing.JFrame {
 
   private void positiveResponseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_positiveResponseButtonActionPerformed
     machine.positiveResponse();
+    logDialog.log("Positive Response");
     setCurrentState(machine);
   }//GEN-LAST:event_positiveResponseButtonActionPerformed
 
   private void negativeResponseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negativeResponseButtonActionPerformed
     machine.negativeResponse();
+    logDialog.log("Negative Response");
     setCurrentState(machine);
   }//GEN-LAST:event_negativeResponseButtonActionPerformed
 
   private void recoveryModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recoveryModeButtonActionPerformed
     machine.recoveryResponse();
+    logDialog.log("Recovery Response");
     setCurrentState(machine);
   }//GEN-LAST:event_recoveryModeButtonActionPerformed
 
   private void bustedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bustedButtonActionPerformed
     machine.busted();
+    logDialog.log("Busted!");
     setCurrentState(machine);
   }//GEN-LAST:event_bustedButtonActionPerformed
 
@@ -416,7 +421,7 @@ public class Main extends javax.swing.JFrame {
     tableModel.addTableModelListener(new TableModelListener(){
 
       public void tableChanged(TableModelEvent e) {
-        setCurrentState(machine);
+        setCurrentState(machine, false);
       }
     });
     
@@ -424,14 +429,23 @@ public class Main extends javax.swing.JFrame {
   
   ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
+  public void setCurrentState(CallMachine machine) {
+    setCurrentState(machine, true);    
+  }
+  
   /**
    * Set the UI to the state existing in the provided state machine.
    * @param machine The state machine to set the UI to.
    */
-  public void setCurrentState(CallMachine machine) {    
+  public void setCurrentState(CallMachine machine, boolean log) {    
     updateState();    
     if (machine != null) {
-      logDialog.log("Moved to state " + machine.getCurrentCallBlock().getName());
+      if (log) {
+        logDialog.log("Moved to state " + machine.getCurrentCallBlock().getName());
+      }
+      if (log && machine.getCurrentCallBlock().getStatement() != null && machine.getCurrentCallBlock().getStatement().getValue() != null) {
+        logDialog.log(replaceVariables(machine.getCurrentCallBlock().getStatement().getValue()));
+      }
     }
   }
   
@@ -494,9 +508,9 @@ public class Main extends javax.swing.JFrame {
     
     // Text
     if (machine.isBusted() && machine.getBustedCallBlock() != null && machine.getBustedCallBlock().getStatement() != null) {
-      setText(machine.getBustedCallBlock().getStatement().getValue());
+      setText(replaceVariables(machine.getBustedCallBlock().getStatement().getValue()));
     } else if (machine.getCurrentCallBlock() != null && machine.getCurrentCallBlock().getStatement() != null) {
-      setText(machine.getCurrentCallBlock().getStatement().getValue());    
+      setText(replaceVariables(machine.getCurrentCallBlock().getStatement().getValue()));    
     } else {
       setText("[No statement provided]");      
     }
@@ -504,13 +518,18 @@ public class Main extends javax.swing.JFrame {
   }
   
   private void setText(String text) {
+    textPane.setText("<html><center>" + text + "</center></html>");    
+  }
+  
+  private String replaceVariables(String text) {
+    String var = text;
     
     // Replace varialbes in text with their substituted value
     for (Entry<String,String> entry : tableModel.getVariableMap().entrySet()) {
-      text = text.replaceAll("\\[" + entry.getKey() + "\\]", entry.getValue());
+      var = var.replaceAll("\\[" + entry.getKey() + "\\]", entry.getValue());
     }
     
-    textPane.setText("<html><center>" + text + "</center></html>");
+    return var;
   }
   
   //---------------------------- Property Methods -----------------------------
