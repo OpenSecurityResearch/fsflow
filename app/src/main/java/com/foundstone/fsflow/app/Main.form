@@ -73,9 +73,9 @@
                   <Component id="jLabel2" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="164" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="225" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="negativeResponseButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -90,7 +90,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="clearButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -212,6 +212,12 @@
         <Component class="javax.swing.JEditorPane" name="textPane">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="20" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="33" type="rgb"/>
+            </Property>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[20, 20, 20, 20]"/>
             </Property>
@@ -312,7 +318,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel2"/>
+            <Property name="text" type="java.lang.String" value="Ready"/>
           </Properties>
         </Component>
       </SubComponents>

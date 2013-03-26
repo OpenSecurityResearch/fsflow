@@ -114,6 +114,8 @@ public class Main extends javax.swing.JFrame {
     callBlockTitle.setText("jLabel2");
 
     textPane.setEditable(false);
+    textPane.setFont(new java.awt.Font("Lucida Grande", 0, 20)); // NOI18N
+    textPane.setForeground(new java.awt.Color(51, 51, 51));
     textPane.setMargin(new java.awt.Insets(20, 20, 20, 20));
     jScrollPane2.setViewportView(textPane);
 
@@ -161,7 +163,7 @@ public class Main extends javax.swing.JFrame {
     jPanel2.setBackground(new java.awt.Color(60, 60, 60));
 
     flowNameLabel.setForeground(new java.awt.Color(255, 255, 255));
-    flowNameLabel.setText("jLabel2");
+    flowNameLabel.setText("Ready");
 
     org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
@@ -250,9 +252,9 @@ public class Main extends javax.swing.JFrame {
           .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
           .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
           .add(layout.createSequentialGroup()
-            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 164, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
               .add(negativeResponseButton)
@@ -264,7 +266,7 @@ public class Main extends javax.swing.JFrame {
           .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(clearButton)
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 12, Short.MAX_VALUE)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
     );
 
