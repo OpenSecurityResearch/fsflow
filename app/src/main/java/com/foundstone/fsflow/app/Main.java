@@ -3,12 +3,15 @@ package com.foundstone.fsflow.app;
 import com.foundstone.fsflow.lib.CallFlow;
 import com.foundstone.fsflow.lib.CallMachine;
 import com.foundstone.fsflow.lib.CallSerializer;
+import com.foundstone.fsflow.lib.Objective;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JFileChooser;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
@@ -47,6 +50,8 @@ public class Main extends javax.swing.JFrame {
     variablesTable = new javax.swing.JTable();
     jLabel2 = new javax.swing.JLabel();
     clearButton = new javax.swing.JButton();
+    objectivePane = new javax.swing.JTabbedPane();
+    jLabel3 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
@@ -111,6 +116,7 @@ public class Main extends javax.swing.JFrame {
     });
 
     callBlockTitle.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+    callBlockTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     callBlockTitle.setText("jLabel2");
 
     textPane.setEditable(false);
@@ -207,6 +213,11 @@ public class Main extends javax.swing.JFrame {
       }
     });
 
+    objectivePane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(120, 120, 120)));
+
+    jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+    jLabel3.setText("Objectives");
+
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -218,25 +229,31 @@ public class Main extends javax.swing.JFrame {
         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
           .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .add(layout.createSequentialGroup()
-            .add(0, 0, Short.MAX_VALUE)
-            .add(clearButton))
-          .add(layout.createSequentialGroup()
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
               .add(layout.createSequentialGroup()
                 .add(6, 6, 6)
                 .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-              .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                .add(org.jdesktop.layout.GroupLayout.LEADING, recoveryModeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(org.jdesktop.layout.GroupLayout.LEADING, bustedButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                  .add(negativeResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 348, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                  .add(positiveResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 332, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+              .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+              .add(layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                  .add(layout.createSequentialGroup()
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                      .add(org.jdesktop.layout.GroupLayout.LEADING, bustedButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .add(org.jdesktop.layout.GroupLayout.LEADING, negativeResponseButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                      .add(org.jdesktop.layout.GroupLayout.TRAILING, recoveryModeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .add(org.jdesktop.layout.GroupLayout.TRAILING, positiveResponseButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)))
+                  .add(jLabel3)
+                  .add(objectivePane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 753, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(0, 0, Short.MAX_VALUE)))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
               .add(jLabel2)
-              .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 324, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+              .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+              .add(layout.createSequentialGroup()
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(clearButton)))))
         .addContainerGap())
     );
 
@@ -255,16 +272,20 @@ public class Main extends javax.swing.JFrame {
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
           .add(layout.createSequentialGroup()
-            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 246, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
               .add(negativeResponseButton)
               .add(positiveResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 38, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-            .add(bustedButton)
+            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+              .add(bustedButton)
+              .add(recoveryModeButton))
+            .add(18, 18, 18)
+            .add(jLabel3)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-            .add(recoveryModeButton))
-          .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+            .add(objectivePane))
+          .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(clearButton)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -388,6 +409,13 @@ public class Main extends javax.swing.JFrame {
   
   private final VariableTableModel tableModel = new VariableTableModel();
   
+  private final TableModelListener objectiveListener = new TableModelListener(){
+
+    public void tableChanged(TableModelEvent e) {
+      //
+    }
+  };
+  
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bustedButton;
   private javax.swing.JLabel callBlockTitle;
@@ -395,6 +423,7 @@ public class Main extends javax.swing.JFrame {
   private javax.swing.JLabel flowNameLabel;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel jLabel3;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JPanel jPanel2;
   private javax.swing.JScrollPane jScrollPane1;
@@ -402,6 +431,7 @@ public class Main extends javax.swing.JFrame {
   private javax.swing.JToolBar jToolBar1;
   private javax.swing.JButton logButton;
   private javax.swing.JButton negativeResponseButton;
+  private javax.swing.JTabbedPane objectivePane;
   private javax.swing.JButton openButton;
   private javax.swing.JButton positiveResponseButton;
   private javax.swing.JButton recoveryModeButton;
@@ -450,6 +480,9 @@ public class Main extends javax.swing.JFrame {
   }
   
   public void initCall(CallFlow callFlow) {
+    
+    clearObjectives();
+    
     if (callFlow == null) {
       machine = null;
       logDialog.clearLog();
@@ -464,6 +497,7 @@ public class Main extends javax.swing.JFrame {
       flowNameLabel.setText("Using flow named: " + callFlow.getName());
       setTitle("FSFlow - " + callFlow.getName());
       tableModel.addVariables(callFlow.getVariables());
+      setObjectives(callFlow.getObjectives());
     }
   }
   
@@ -474,6 +508,27 @@ public class Main extends javax.swing.JFrame {
   //---------------------------- Abstract Methods -----------------------------
   
   //---------------------------- Utility Methods ------------------------------
+  
+  private void clearObjectives() {
+    
+    int count = objectivePane.getComponentCount();
+    
+    for (int x = 0 ; x < count ; x++) {
+      JTable table = JTable.class.cast(objectivePane.getComponentAt(x));
+      table.getModel().removeTableModelListener(objectiveListener);      
+    } 
+    objectivePane.removeAll();
+  }
+  
+  private void setObjectives(List<Objective> objectives) {
+    for (Objective objective : objectives) {
+      ObjectiveTableModel tm = new ObjectiveTableModel();
+      tm.setObjective(objective);      
+      JTable table = new JTable(tm);
+      table.setRowHeight(24);
+      objectivePane.add(objective.getName(), table);
+    }
+  }
   
   private void updateState() {
 
