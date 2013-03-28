@@ -1,2 +1,2 @@
 #!/bin/sh
-java -cp "*" com.foundstone.fsflow.app.Main
+java -cp "lib/*" com.foundstone.fsflow.app.Main

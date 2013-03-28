@@ -8,7 +8,7 @@
     <format>zip</format>
   </formats>
   <fileSets>
-    <fileSet>
+<!--    <fileSet>
       <directory>${project.basedir}/docs</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
@@ -16,7 +16,7 @@
         <include>LICENSE*</include>
         <include>NOTICE*</include>
       </includes>
-    </fileSet>
+    </fileSet> -->
     <fileSet>
       <directory>files</directory>
       <outputDirectory>/</outputDirectory>
@@ -24,7 +24,7 @@
   </fileSets>
   <dependencySets>
     <dependencySet>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>/lib</outputDirectory>
       <useProjectArtifact>true</useProjectArtifact>
       <scope>runtime</scope>
     </dependencySet>
