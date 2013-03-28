@@ -21,19 +21,21 @@ public final class ObjectiveTableModel extends AbstractTableModel {
   
   //////////////////////////////// Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
+  private final Objective objective;
+  
   private final Map<Flag,String> map = Maps.newLinkedHashMap();
   
   /////////////////////////////// Constructors \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
   
-  ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+  public ObjectiveTableModel(Objective objective) {
+    this.objective = objective;
   
-  public void setObjective(Objective objective) {
-    map.clear();
-    
     for (Flag f : objective.getFlags()) {
       map.put(f, "[Empty]");
-    }
+    }   
   }
+
+  ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
   //------------------------ Implements:
   
@@ -81,4 +83,9 @@ public final class ObjectiveTableModel extends AbstractTableModel {
   //---------------------------- Utility Methods ------------------------------
   
   //---------------------------- Property Methods -----------------------------     
+  
+  public Objective getObjective() {
+    return objective;
+  }
+    
 }

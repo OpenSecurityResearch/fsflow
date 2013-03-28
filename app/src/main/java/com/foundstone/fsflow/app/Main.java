@@ -4,6 +4,7 @@ import com.foundstone.fsflow.lib.CallFlow;
 import com.foundstone.fsflow.lib.CallMachine;
 import com.foundstone.fsflow.lib.CallSerializer;
 import com.foundstone.fsflow.lib.Objective;
+import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
@@ -358,6 +359,31 @@ public class Main extends javax.swing.JFrame {
     tableModel.clearVariables();
   }//GEN-LAST:event_clearButtonActionPerformed
 
+  
+  private class ObjectiveTableModelListener implements TableModelListener {
+    
+    private final ObjectiveTableModel model;
+    
+    private ObjectiveTableModelListener(ObjectiveTableModel model) {
+      this.model = model;
+    }
+    
+    public void tableChanged(TableModelEvent e) {
+      if (e.getType() != TableModelEvent.UPDATE) {
+        return;
+      }
+      
+      for (int x = e.getFirstRow() ; x <= e.getLastRow() ; x++) {
+        logDialog.log("Added objective " + model.getObjective().getName() + "[" + model.getValueAt(x, 0) + "] with value " +  model.getValueAt(x, 1));
+      }
+    }
+    
+    public void remove() {
+      model.removeTableModelListener(this);
+    }
+    
+  }
+  
   ///////////////////////////// Class Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
  
   private static final XStream X = CallSerializer.createStream();
@@ -408,13 +434,8 @@ public class Main extends javax.swing.JFrame {
   private final CallLogDialog logDialog = new CallLogDialog(this, false);
   
   private final VariableTableModel tableModel = new VariableTableModel();
-  
-  private final TableModelListener objectiveListener = new TableModelListener(){
-
-    public void tableChanged(TableModelEvent e) {
-      //
-    }
-  };
+    
+  private final List<ObjectiveTableModelListener> objectiveListeners = Lists.newArrayList();
   
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bustedButton;
@@ -509,24 +530,24 @@ public class Main extends javax.swing.JFrame {
   
   //---------------------------- Utility Methods ------------------------------
   
-  private void clearObjectives() {
-    
-    int count = objectivePane.getComponentCount();
-    
-    for (int x = 0 ; x < count ; x++) {
-      JTable table = JTable.class.cast(objectivePane.getComponentAt(x));
-      table.getModel().removeTableModelListener(objectiveListener);      
-    } 
+  private void clearObjectives() {       
     objectivePane.removeAll();
+    for (ObjectiveTableModelListener listener : objectiveListeners) {
+      listener.remove();
+    }
+    
+    objectiveListeners.clear();
   }
   
   private void setObjectives(List<Objective> objectives) {
     for (Objective objective : objectives) {
-      ObjectiveTableModel tm = new ObjectiveTableModel();
-      tm.setObjective(objective);      
+      ObjectiveTableModel tm = new ObjectiveTableModel(objective);
       JTable table = new JTable(tm);
       table.setRowHeight(24);
       objectivePane.add(objective.getName(), table);
+      ObjectiveTableModelListener l = new ObjectiveTableModelListener(tm);
+      tm.addTableModelListener(l);
+      objectiveListeners.add(l);
     }
   }
   

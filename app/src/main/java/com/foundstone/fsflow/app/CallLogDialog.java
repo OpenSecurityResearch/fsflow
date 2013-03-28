@@ -88,7 +88,7 @@ public class CallLogDialog extends javax.swing.JDialog {
   private javax.swing.JEditorPane logPane;
   // End of variables declaration//GEN-END:variables
 
-  private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss Z");
+  private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
   
   private final PlainDocument doc = new PlainDocument();
   
