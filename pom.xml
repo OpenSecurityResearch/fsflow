@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.foundstone.fsflow</groupId>
   <artifactId>fsflow-parent</artifactId>
-  <version>0.1.2-SNAPSHOT</version>
+  <version>0.1.1</version>
   <packaging>pom</packaging>
   <name>FSFlow - Parent</name>
   
@@ -10,7 +10,7 @@
     <connection>scm:git:git@github.com:Foundstone/fsflow.git</connection>
     <developerConnection>scm:git:git@github.com:Foundstone/fsflow.git</developerConnection>
     <url>https://github.com/Foundstone/fsflow</url>
-    <tag>HEAD</tag>
+    <tag>fsflow-0.1.1</tag>
   </scm>
     
   <build>
