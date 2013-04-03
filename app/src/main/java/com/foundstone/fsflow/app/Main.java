@@ -34,6 +34,7 @@ public class Main extends javax.swing.JFrame {
 
     jPanel1 = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
+    jLabel4 = new javax.swing.JLabel();
     negativeResponseButton = new javax.swing.JButton();
     positiveResponseButton = new javax.swing.JButton();
     recoveryModeButton = new javax.swing.JButton();
@@ -63,13 +64,19 @@ public class Main extends javax.swing.JFrame {
     jLabel1.setForeground(new java.awt.Color(255, 255, 255));
     jLabel1.setText("FSFlow - Social Engineering Call Flow");
 
+    jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+    jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel4.setText("by Foundstone");
+
     org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(jPanel1Layout.createSequentialGroup()
         .add(14, 14, 14)
-        .add(jLabel1)
+        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+          .add(jLabel1)
+          .add(jLabel4))
         .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     jPanel1Layout.setVerticalGroup(
@@ -77,7 +84,9 @@ public class Main extends javax.swing.JFrame {
       .add(jPanel1Layout.createSequentialGroup()
         .add(20, 20, 20)
         .add(jLabel1)
-        .addContainerGap(24, Short.MAX_VALUE))
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+        .add(jLabel4)
+        .addContainerGap(22, Short.MAX_VALUE))
     );
 
     negativeResponseButton.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
@@ -252,9 +261,7 @@ public class Main extends javax.swing.JFrame {
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
               .add(jLabel2)
               .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-              .add(layout.createSequentialGroup()
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(clearButton)))))
+              .add(clearButton))))
         .addContainerGap())
     );
 
@@ -286,7 +293,7 @@ public class Main extends javax.swing.JFrame {
             .add(jLabel3)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(objectivePane))
-          .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+          .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(clearButton)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -445,6 +452,7 @@ public class Main extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
+  private javax.swing.JLabel jLabel4;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JPanel jPanel2;
   private javax.swing.JScrollPane jScrollPane1;
