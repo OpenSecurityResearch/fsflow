@@ -3,16 +3,13 @@ package com.foundstone.fsflow.app;
 import com.foundstone.fsflow.lib.CallFlow;
 import com.foundstone.fsflow.lib.CallMachine;
 import com.foundstone.fsflow.lib.CallSerializer;
-import com.foundstone.fsflow.lib.Objective;
-import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.Collections;
 import java.util.Map.Entry;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JFileChooser;
-import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
@@ -52,8 +49,9 @@ public class Main extends javax.swing.JFrame {
     variablesTable = new javax.swing.JTable();
     jLabel2 = new javax.swing.JLabel();
     clearButton = new javax.swing.JButton();
-    objectivePane = new javax.swing.JTabbedPane();
     jLabel3 = new javax.swing.JLabel();
+    jScrollPane3 = new javax.swing.JScrollPane();
+    objectivesTable = new javax.swing.JTable();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
@@ -186,7 +184,7 @@ public class Main extends javax.swing.JFrame {
     jPanel2.setLayout(jPanel2Layout);
     jPanel2Layout.setHorizontalGroup(
       jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-      .add(jPanel2Layout.createSequentialGroup()
+      .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
         .addContainerGap()
         .add(flowNameLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addContainerGap())
@@ -223,49 +221,65 @@ public class Main extends javax.swing.JFrame {
       }
     });
 
-    objectivePane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(120, 120, 120)));
-
     jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
     jLabel3.setText("Objectives");
+
+    objectivesTable.setModel(new javax.swing.table.DefaultTableModel(
+      new Object [][] {
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null}
+      },
+      new String [] {
+        "Title 1", "Title 2", "Title 3", "Title 4"
+      }
+    ));
+    objectivesTable.setRowHeight(24);
+    jScrollPane3.setViewportView(objectivesTable);
 
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-      .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-      .add(layout.createSequentialGroup()
+      .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
-        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-          .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .add(layout.createSequentialGroup()
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+          .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(76, 76, 76))
+          .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
               .add(layout.createSequentialGroup()
                 .add(6, 6, 6)
                 .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-              .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+              .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+              .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
               .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                  .add(jLabel2)
                   .add(layout.createSequentialGroup()
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                       .add(org.jdesktop.layout.GroupLayout.LEADING, bustedButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .add(org.jdesktop.layout.GroupLayout.LEADING, negativeResponseButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+                      .add(org.jdesktop.layout.GroupLayout.LEADING, negativeResponseButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
                     .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                      .add(org.jdesktop.layout.GroupLayout.TRAILING, recoveryModeButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .add(org.jdesktop.layout.GroupLayout.TRAILING, positiveResponseButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)))
-                  .add(jLabel3)
-                  .add(objectivePane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 753, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                      .add(positiveResponseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 373, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                      .add(recoveryModeButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 373, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                 .add(0, 0, Short.MAX_VALUE)))
-            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-              .add(jLabel2)
-              .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-              .add(clearButton))))
+              .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+              .add(jLabel3)))
+          .add(layout.createSequentialGroup()
+            .add(clearButton)
+            .add(0, 0, Short.MAX_VALUE)))
         .addContainerGap())
+      .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
-    layout.linkSize(new java.awt.Component[] {negativeResponseButton, positiveResponseButton}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
+    layout.linkSize(new java.awt.Component[] {bustedButton, negativeResponseButton, positiveResponseButton, recoveryModeButton}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
     layout.setVerticalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -274,12 +288,12 @@ public class Main extends javax.swing.JFrame {
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-          .add(callBlockTitle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-          .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
           .add(layout.createSequentialGroup()
+            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+              .add(callBlockTitle)
+              .add(jLabel3))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 246, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -289,16 +303,20 @@ public class Main extends javax.swing.JFrame {
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
               .add(bustedButton)
               .add(recoveryModeButton))
-            .add(18, 18, 18)
-            .add(jLabel3)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
+            .add(jLabel2)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-            .add(objectivePane))
-          .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE))
+            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+          .add(layout.createSequentialGroup()
+            .add(28, 28, 28)
+            .add(jScrollPane3)))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(clearButton)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
     );
+
+    layout.linkSize(new java.awt.Component[] {callBlockTitle, jLabel3}, org.jdesktop.layout.GroupLayout.VERTICAL);
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
@@ -367,30 +385,30 @@ public class Main extends javax.swing.JFrame {
   }//GEN-LAST:event_clearButtonActionPerformed
 
   
-  private class ObjectiveTableModelListener implements TableModelListener {
-    
-    private final ObjectiveTableModel model;
-    
-    private ObjectiveTableModelListener(ObjectiveTableModel model) {
-      this.model = model;
-    }
-    
-    public void tableChanged(TableModelEvent e) {
-      if (e.getType() != TableModelEvent.UPDATE) {
-        return;
-      }
-      
-      for (int x = e.getFirstRow() ; x <= e.getLastRow() ; x++) {
-        logDialog.log("Added objective " + model.getObjective().getName() + "[" + model.getValueAt(x, 0) + "] with value " +  model.getValueAt(x, 1));
-      }
-    }
-    
-    public void remove() {
-      model.removeTableModelListener(this);
-    }
-    
-  }
-  
+//  private class ObjectiveTableModelListener implements TableModelListener {
+//    
+//    private final ObjectiveTableModel model;
+//    
+//    private ObjectiveTableModelListener(ObjectiveTableModel model) {
+//      this.model = model;
+//    }
+//    
+//    public void tableChanged(TableModelEvent e) {
+//      if (e.getType() != TableModelEvent.UPDATE) {
+//        return;
+//      }
+//      
+//      for (int x = e.getFirstRow() ; x <= e.getLastRow() ; x++) {
+//        logDialog.log("Added objective " + model.getObjective().getName() + "[" + model.getValueAt(x, 0) + "] with value " +  model.getValueAt(x, 1));
+//      }
+//    }
+//    
+//    public void remove() {
+//      model.removeTableModelListener(this);
+//    }
+//    
+//  }
+//  
   ///////////////////////////// Class Attributes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
  
   private static final XStream X = CallSerializer.createStream();
@@ -440,9 +458,9 @@ public class Main extends javax.swing.JFrame {
   
   private final CallLogDialog logDialog = new CallLogDialog(this, false);
   
-  private final VariableTableModel tableModel = new VariableTableModel();
-    
-  private final List<ObjectiveTableModelListener> objectiveListeners = Lists.newArrayList();
+  private final VariableTableModel tableModel = new VariableTableModel();   
+  
+  private final ObjectivesTableModel objectivesTableModel = new ObjectivesTableModel();
   
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton bustedButton;
@@ -457,10 +475,11 @@ public class Main extends javax.swing.JFrame {
   private javax.swing.JPanel jPanel2;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
+  private javax.swing.JScrollPane jScrollPane3;
   private javax.swing.JToolBar jToolBar1;
   private javax.swing.JButton logButton;
   private javax.swing.JButton negativeResponseButton;
-  private javax.swing.JTabbedPane objectivePane;
+  private javax.swing.JTable objectivesTable;
   private javax.swing.JButton openButton;
   private javax.swing.JButton positiveResponseButton;
   private javax.swing.JButton recoveryModeButton;
@@ -484,6 +503,21 @@ public class Main extends javax.swing.JFrame {
       }
     });
     
+    
+    objectivesTable.setModel(objectivesTableModel);
+    objectivesTableModel.addTableModelListener(new TableModelListener(){
+
+      public void tableChanged(TableModelEvent e) {
+        if (e.getType() != TableModelEvent.UPDATE || e.getLastRow() == Integer.MAX_VALUE) {
+        return;
+        }        
+        for (int row = e.getFirstRow() ; row <= e.getLastRow() ; row++) {
+          String objective = objectivesTableModel.getValueAt(row, 0);
+          String value = objectivesTableModel.getValueAt(row, 1);
+          logDialog.log("Added objective " + objective + " with value " +  value);
+        }
+      }
+    });
   }
   
   ////////////////////////////////// Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -510,7 +544,7 @@ public class Main extends javax.swing.JFrame {
   
   public void initCall(CallFlow callFlow) {
     
-    clearObjectives();
+    objectivesTableModel.setObjectives(Collections.EMPTY_LIST);
     
     if (callFlow == null) {
       machine = null;
@@ -526,7 +560,8 @@ public class Main extends javax.swing.JFrame {
       flowNameLabel.setText("Using flow named: " + callFlow.getName());
       setTitle("FSFlow - " + callFlow.getName());
       tableModel.addVariables(callFlow.getVariables());
-      setObjectives(callFlow.getObjectives());
+      
+      objectivesTableModel.setObjectives(callFlow.getObjectives());
     }
   }
   
@@ -537,28 +572,7 @@ public class Main extends javax.swing.JFrame {
   //---------------------------- Abstract Methods -----------------------------
   
   //---------------------------- Utility Methods ------------------------------
-  
-  private void clearObjectives() {       
-    objectivePane.removeAll();
-    for (ObjectiveTableModelListener listener : objectiveListeners) {
-      listener.remove();
-    }
     
-    objectiveListeners.clear();
-  }
-  
-  private void setObjectives(List<Objective> objectives) {
-    for (Objective objective : objectives) {
-      ObjectiveTableModel tm = new ObjectiveTableModel(objective);
-      JTable table = new JTable(tm);
-      table.setRowHeight(24);
-      objectivePane.add(objective.getName(), table);
-      ObjectiveTableModelListener l = new ObjectiveTableModelListener(tm);
-      tm.addTableModelListener(l);
-      objectiveListeners.add(l);
-    }
-  }
-  
   private void updateState() {
 
     updateText();
@@ -581,7 +595,7 @@ public class Main extends javax.swing.JFrame {
   private void updateText() {
     
     if (machine == null) {
-      callBlockTitle.setText("");
+      callBlockTitle.setText("[No Title]");
       return;
     } else if(machine.isBusted()) {
       callBlockTitle.setText("Busted!");            

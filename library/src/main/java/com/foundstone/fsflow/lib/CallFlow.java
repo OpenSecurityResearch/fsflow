@@ -16,7 +16,7 @@ public final class CallFlow {
   
   ////////////////////////////// Class Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   
-  public static CallFlow from(String name, List<Objective> objectives, List<CallBlock> callBlocks, FlowBlock flowBlock) {
+  public static CallFlow from(String name, List<String> objectives, List<CallBlock> callBlocks, FlowBlock flowBlock) {
     CallFlow flow = new CallFlow();
     flow.name = name;
     flow.objectives = Lists.newArrayList(objectives);
@@ -29,7 +29,7 @@ public final class CallFlow {
     
   private volatile String name;
   
-  private volatile List<Objective> objectives;
+  private volatile List<String> objectives;
   
   private volatile List<CallBlock> callBlocks;
   
@@ -69,7 +69,7 @@ public final class CallFlow {
     this.name = name;
   }
 
-  public List<Objective> getObjectives() {
+  public List<String> getObjectives() {
     return objectives;
   }
 

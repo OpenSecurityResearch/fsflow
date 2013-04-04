@@ -26,11 +26,11 @@ public final class CallSerializer {
     x.aliasField("FlowBlock", CallFlow.class, "flowBlock");
     x.alias("CallFlow", CallFlow.class);
     
-    // Objective(s)
-    x.alias("Objective", Objective.class);
+    // Objective
     x.aliasField("Objectives", CallFlow.class, "objectives");
-    x.useAttributeFor(Objective.class, "name");    
-    x.addImplicitCollection(Objective.class, "flags");
+    x.addImplicitCollection(CallFlow.class, "objectives", "Objective", String.class);
+    //x.addImplicitCollection(CallFlow.class, "objectives");
+    
     
     // CallBlocks
     x.alias("CallBlock", CallBlock.class);

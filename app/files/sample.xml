@@ -1,13 +1,8 @@
 <CallFlow Name="UserCantLogIntoWebsite">
-	<Objectives>
-		<Objective name="VisitWebsite">
-			<flag value="WebsiteURL"/>
-		</Objective>
-		<Objective name="LoginWebsite">
-			<flag value="Username" />
-			<flag value="password" />
-		</Objective>
-	</Objectives>
+
+  <Objective>Login Username</Objective>
+  <Objective>Login Password</Objective>
+  <Objective>PIN</Objective>
 
 	<!-- This is just a stub call. We'd need this if the caller doesnt pick up and we want to log -->
 	<CallBlock name="Caller Pickup"/>
