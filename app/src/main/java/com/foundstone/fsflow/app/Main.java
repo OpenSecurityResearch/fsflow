@@ -43,6 +43,7 @@ public class Main extends javax.swing.JFrame {
     openButton = new javax.swing.JButton();
     reloadButton = new javax.swing.JButton();
     logButton = new javax.swing.JButton();
+    jButton1 = new javax.swing.JButton();
     jPanel2 = new javax.swing.JPanel();
     flowNameLabel = new javax.swing.JLabel();
     jScrollPane1 = new javax.swing.JScrollPane();
@@ -174,6 +175,19 @@ public class Main extends javax.swing.JFrame {
       }
     });
     jToolBar1.add(logButton);
+
+    jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/about.png"))); // NOI18N
+    jButton1.setText("About");
+    jButton1.setFocusable(false);
+    jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    jButton1.setMargin(new java.awt.Insets(5, 5, 5, 5));
+    jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton1ActionPerformed(evt);
+      }
+    });
+    jToolBar1.add(jButton1);
 
     jPanel2.setBackground(new java.awt.Color(60, 60, 60));
 
@@ -384,6 +398,10 @@ public class Main extends javax.swing.JFrame {
     tableModel.clearVariables();
   }//GEN-LAST:event_clearButtonActionPerformed
 
+  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    aboutDialog.setVisible(!aboutDialog.isVisible());
+  }//GEN-LAST:event_jButton1ActionPerformed
+
   
 //  private class ObjectiveTableModelListener implements TableModelListener {
 //    
@@ -458,6 +476,8 @@ public class Main extends javax.swing.JFrame {
   
   private final CallLogDialog logDialog = new CallLogDialog(this, false);
   
+  private final AboutDialog aboutDialog = new AboutDialog(this, false);
+  
   private final VariableTableModel tableModel = new VariableTableModel();   
   
   private final ObjectivesTableModel objectivesTableModel = new ObjectivesTableModel();
@@ -467,6 +487,7 @@ public class Main extends javax.swing.JFrame {
   private javax.swing.JLabel callBlockTitle;
   private javax.swing.JButton clearButton;
   private javax.swing.JLabel flowNameLabel;
+  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
